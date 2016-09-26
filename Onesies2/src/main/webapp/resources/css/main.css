@@ -1,0 +1,113 @@
+#header {
+	float:inherit;
+	height: 6cm;
+	background-image: url("images/homepg-head.jpg");
+	background-repeat:no-repeat;
+	background-size:100%;
+	width:100%;
+	text-align: center;
+	color: maroon;
+	font-size: 1cm;
+	
+}
+
+#heading1 {
+	text-align:center;
+	height: 2cm;
+	font-style: italic;
+	font-family: fantasy;
+	text-transform: uppercase;
+	text-align: center;
+	color: green
+}
+#body1 {
+	
+	background-image: url("images/zoom.jpg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	width: auto;
+}
+
+#form1 {
+	background: -webkit-linear-gradient(bottom, #CCCCCC, #EEEEEE 175px);
+	background: -moz-linear-gradient(bottom, #CCCCCC, #EEEEEE 175px);
+	background: linear-gradient(bottom, #CCCCCC, #EEEEEE 175px);
+	background-color: lightblue;
+	margin: auto;
+	position: relative;
+	width: 525px;
+	height: 575px;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-style: italic;
+	line-height: 24px;
+	font-weight: bold;
+	color: purple;
+	text-decoration: none;
+	border-radius: 10px;
+	padding: 10px;
+	border: 1px solid #999;
+	border: inset 1px solid #333;
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+#save_button {
+	
+	padding-left:30px;
+	padding-right:30px;
+	width: 100px;
+	text-align: center;
+	position: relative;
+	background-color: lightgreen;
+	float: right;
+	
+}
+#report_header_text{
+	text-align: center;
+	color: maroon;
+}
+#reset {
+	color: red;
+	
+}
+#rese {
+	font-weight:bolder;
+	color: #0000ff;
+	float: right;
+}
+#report_display_button {
+	
+	width: 125px;
+	text-align: center;
+	position: relative;
+	color:white;
+	background-color: royalblue;
+	height: 125px
+	
+}
+#report_footer {
+	
+	
+	background-image: url("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTqbTrVgFFnK-MxXqzs5_zGM4VQuZwPYGEqer13ts8v6jss2AvQ");
+	width: 100%;
+	background-size: 100%;
+}
+#out {
+	color: red;
+}
+.input {
+    border: 4px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;
+}
