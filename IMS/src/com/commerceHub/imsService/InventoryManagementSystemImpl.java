@@ -3,26 +3,42 @@ package com.commerceHub.imsService;
 import java.util.concurrent.ConcurrentMap;
 
 import com.commerceHub.dataSource.MockDatabase;
+import com.commerceHub.model.PickingResult;
 import com.commerceHub.model.Product;
+import com.commerceHub.model.RestockingResult;
 
 public class InventoryManagementSystemImpl implements InventoryManagementSystem {
-	
-	private String messageForPicking = "{0} units of Product {1} bearing ID {2} picked";
-	private String messageForRestocking = "{0} units of Product {1} bearing ID {2} added";
+
 	ConcurrentMap<String, Product> productList = MockDatabase.getList();
 
 	@Override
-	public synchronized ConcurrentMap<String, Product> pickProduct(String productId, int amountToPick) {
+	public synchronized PickingResult pickProduct(String productId, int amountToPick) {
+		PickingResult pickingResult = new PickingResult();
 		try {
 			Product productX = (Product) productList.get(productId);
+
 			if (productX != null) {
-				if (amountToPick > productX.getInventoryLevel()) {
-					System.out.println("Not sufficient units of product "+productX.getProductID()+" in the inventory");
+				if (amountToPick >= productX.getInventoryLevel()) {
+
+					pickingResult.setProductId(productX.getProductID());
+					pickingResult.setProductLocation(productX.getLocation());
+					pickingResult.setInventoryCurrentLevel(0);
+					pickingResult.setExcessRequest(amountToPick - productX.getInventoryLevel());
+					productX.setInventoryLevel(0);
+					productList.replace(productId, productX);
+
 				} else {
+
 					int temp = productX.getInventoryLevel() - amountToPick;
+
+					pickingResult.setProductId(productX.getProductID());
+					pickingResult.setProductLocation(productX.getLocation());
+					pickingResult.setInventoryCurrentLevel(temp);
+					pickingResult.setExcessRequest(0);
+
 					productX.setInventoryLevel(temp);
 					productList.replace(productId, productX);
-					System.out.println(amountToPick+" units of product "+productX.getProductID()+" removed from the inventory. Inventory level = "+productX.getInventoryLevel());
+
 				}
 			} else {
 				System.out.println("the product id is invalid");
@@ -31,22 +47,35 @@ public class InventoryManagementSystemImpl implements InventoryManagementSystem 
 			System.out.println(e.toString());
 		}
 
-		return productList;
+		return pickingResult;
 	}
 
 	@Override
-	public ConcurrentMap<String, Product> restockProduct(String productId, int amountToRestock) {
+	public synchronized RestockingResult restockProduct(String productId, int amountToRestock) {
+		RestockingResult restockingResult = new RestockingResult();
 		try {
 			Product productX = (Product) productList.get(productId);
 			if (productX != null) {
 				if ((amountToRestock + productX.getInventoryLevel()) > productX.getMaxLevel()) {
-					System.out.println("Over the limit. Only " + (productX.getMaxLevel() - productX.getInventoryLevel())
-							+ " units of "+productX.getProductID()+" can be added more");
+
+					restockingResult.setProductId(productX.getProductID());
+					restockingResult.setProductLocation(productX.getLocation());
+					restockingResult.setInventoryCurrentLevel(productX.getMaxLevel());
+					restockingResult.setExcessRequest(
+							(amountToRestock + productX.getInventoryLevel()) - productX.getMaxLevel());
+					productX.setInventoryLevel(productX.getMaxLevel());
+					productList.replace(productId, productX);
+
 				} else {
 					int temp = productX.getInventoryLevel() + amountToRestock;
+
+					restockingResult.setProductId(productX.getProductID());
+					restockingResult.setProductLocation(productX.getLocation());
+					restockingResult.setInventoryCurrentLevel(temp);
+					restockingResult.setExcessRequest(0);
 					productX.setInventoryLevel(temp);
 					productList.replace(productId, productX);
-					System.out.println(amountToRestock+" units of product "+productX.getProductID()+" added to the inventory. Inventory level = "+productX.getInventoryLevel());
+
 				}
 			} else {
 				System.out.println("the product id is invalid");
@@ -55,7 +84,7 @@ public class InventoryManagementSystemImpl implements InventoryManagementSystem 
 			System.out.println(e.toString());
 		}
 
-		return productList;
+		return restockingResult;
 
 	}
 
