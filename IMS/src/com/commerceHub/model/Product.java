@@ -59,6 +59,49 @@ public class Product {
 		return "Product with productID=" + productID + ", productName=" + productName + ", inventoryLevel=" + inventoryLevel
 				+ ", is at location=" + location;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + inventoryLevel;
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + maxLevel;
+		result = prime * result + ((productID == null) ? 0 : productID.hashCode());
+		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (inventoryLevel != other.inventoryLevel)
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (maxLevel != other.maxLevel)
+			return false;
+		if (productID == null) {
+			if (other.productID != null)
+				return false;
+		} else if (!productID.equals(other.productID))
+			return false;
+		if (productName == null) {
+			if (other.productName != null)
+				return false;
+		} else if (!productName.equals(other.productName))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 	
